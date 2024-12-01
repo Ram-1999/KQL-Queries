@@ -1,0 +1,19 @@
+// Query: Detect Role Assignment Changes in Azure
+// Description: This query detects successful role assignment changes in Azure. 
+// It helps identify potential privilege escalations or unauthorized modifications 
+// to role assignments by analyzing Azure Activity logs.
+
+// Query starts here
+AzureActivity
+| where OperationNameValue contains "MICROSOFT.AUTHORIZATION/ROLEASSIGNMENTS/WRITE"
+| where ActivityStatusValue contains "Success"
+| project TimeGenerated, OperationNameValue, ResourceGroup, Caller, CallerIpAddress, ResourceProviderValue, _ResourceId
+
+// Explanation of projected fields:
+// - TimeGenerated: The timestamp of the activity.
+// - OperationNameValue: The operation performed (role assignment changes in this case).
+// - ResourceGroup: The resource group where the operation occurred.
+// - Caller: The user or service principal that initiated the operation.
+// - CallerIpAddress: The IP address from which the operation was initiated.
+// - ResourceProviderValue: The Azure resource provider involved.
+// - _ResourceId: The unique identifier of the affected resource.
