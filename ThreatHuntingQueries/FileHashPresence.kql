@@ -1,0 +1,6 @@
+// Query to find the file hash which is present in the system or not
+let filehash = "77200156d4773175d341aad11ab23bd52445065cd95060348da17d083dc27688"; // replace with sha256 hash here.
+
+DeviceFileEvents
+| where SHA256 == filehash
+| project TimeGenerated, ActionType, AdditionalFields, DeviceName, FileName, FolderPath, User = InitiatingProcessAccountUpn, ParentProcess = InitiatingProcessParentFileName, SHA256

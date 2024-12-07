@@ -12,4 +12,4 @@ This folder contains KQL queries designed to assist in threat hunting and incide
 ### 2. **Inbound and Outbound Traffic Query**  
 - **Purpose**: Investigate inbound and outbound network traffic for a specific IP address.  
 - **Usage**: Replace the placeholder IP address in the query with the IP you want to analyze.  
-- **File**: [InboundOutboundTraffic.kql](./InboundOutboundTraffic.kql) 
+- **File**: [InboundOutboundTraffic.kql](./InboundOutboundTraffic.kql)
