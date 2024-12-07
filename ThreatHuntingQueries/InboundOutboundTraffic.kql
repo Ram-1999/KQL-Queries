@@ -1,0 +1,6 @@
+// KQL Query to check inbound and outbound traffic for a specific IP
+let IP = "74.115.51.9"; // replace the ip with the one you want to check
+
+DeviceNetworkEvents
+| where RemoteIP == IP
+| project TimeGenerated, ActionType, DeviceName, RemoteIP, RemoteIPType, AdditionalFields, User = InitiatingProcessAccountName, InitiatingProcessFileName, RemotePort
