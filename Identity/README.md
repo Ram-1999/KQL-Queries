@@ -1,22 +1,10 @@
-# Identity KQL Queries
+# Identity Threat Hunting Queries  
 
-## Sign-in Attempts to Disabled Accounts
+This folder contains KQL queries designed to assist in identity-based threat hunting and incident investigations. Each query focuses on detecting suspicious activity related to authentication and user access.  
 
-**Query File:** [disabled_account_signin.kql](./disabled_account_signin.kql)
+## Queries  
 
-This KQL query detects sign-in attempts to disabled accounts in Microsoft Entra (Azure AD).  
-It helps identify potential security threats where a disabled user account is being targeted.
-
-### Query Breakdown:
-- **Filters logs** for `ResultType == 50057`, which indicates an account is disabled.
-- **Summarizes** data by `UserPrincipalName` and `IPAddress`, counting unique applications and total attempts.
-- **Applies a threshold** (default: 3) to detect multiple failed attempts.
-- **Extracts username and domain** from `UserPrincipalName`.
-
-### Usage:
-1. Open Microsoft Sentinel or Log Analytics.
-2. Copy and paste the query from `disabled_account_signin.kql`.
-3. Adjust the threshold as needed.
-4. Analyze the results for unusual activity.
-
-
+### 1. **Sign-in Attempts to Disabled Accounts**  
+- **Purpose**: Detects repeated sign-in attempts to disabled accounts in Microsoft Entra ID (Azure AD).  
+- **Usage**: Identifies potential security threats where a disabled user account is being targeted.  
+- **File**: [disabled_account_signin.kql](./disabled_account_signin.kql)  
