@@ -1,0 +1,21 @@
+// KQL Query: Detecting Sign-in Attempts to Disabled Accounts
+// Author: [Your Name]
+// Purpose: This query identifies repeated sign-in attempts to disabled accounts in Microsoft Entra ID (Azure AD).
+// Usage: Helps in detecting potential brute-force attacks or unauthorized access attempts on disabled accounts.
+
+let threshold = 3;  // Define the minimum number of attempts to flag suspicious activity
+SigninLogs
+| where ResultType == "50057"  // Filter for failed sign-ins due to disabled accounts
+| where ResultDescription =~ "User account is disabled. The account has been disabled by an administrator."
+| summarize 
+    StartTime = min(TimeGenerated),  // Capture the earliest attempt time
+    EndTime = max(TimeGenerated),  // Capture the latest attempt time
+    applicationCount = dcount(AppDisplayName),  // Count unique applications used in attempts
+    applicationSet = make_set(AppDisplayName),  // List applications used
+    EventCount = count()  // Count the total number of attempts
+    by UserPrincipalName, IPAddress  // Group results by user and IP
+| where EventCount >= threshold  // Only show users exceeding the defined threshold
+| extend 
+    timestamp = StartTime,  
+    Name = tostring(split(UserPrincipalName, '@', 0)[0]),  // Extract username
+    UPNSuffix = tostring(split(UserPrincipalName, '@', 1)[0])  // Extract domain
